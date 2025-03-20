@@ -1,0 +1,29 @@
+{
+  "name": "main-request-handler",
+  "version": "1.0.0",
+  "main": "dist/app.js",
+  "repository": "https://github.com/ThiagoLiboni/IBM-main-request-handler.git",
+  "author": "",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/app.js",
+    "dev": "tsc --watch"
+  },
+  "dependencies": {
+    "@types/dotenv": "^8.2.3",
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.13.10",
+    "authentication-api-ibm": "^1.0.7",
+    "axios": "^1.8.1",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.14",
+    "jest": "^29.7.0",
+    "supertest": "^7.0.0",
+    "ts-jest": "^29.2.6",
+    "typescript": "^5.8.2"
+  }
+}

@@ -1,4 +1,4 @@
-import { Authenticate } from "authentication-api-ibm"
+import { Authenticate } from "auth-ibm-insurances"
 import { UserData } from "../utils/contracts"
 import dotenv from 'dotenv';
 import {RedisConnection} from '../utils/RedisConnection'

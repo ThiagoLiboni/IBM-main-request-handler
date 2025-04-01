@@ -3,14 +3,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const authentication_api_ibm_1 = require("authentication-api-ibm");
+const auth_ibm_insurances_1 = require("auth-ibm-insurances");
 const dotenv_1 = __importDefault(require("dotenv"));
 const RedisConnection_1 = require("../utils/RedisConnection");
 dotenv_1.default.config();
 class UserAuth {
     constructor(data, database_connection, redisClient) {
         this.redisClient = redisClient;
-        this.authorize = new authentication_api_ibm_1.Authenticate({ userLogged: data, databaseURL: database_connection, redisClient: this.redisClient });
+        this.authorize = new auth_ibm_insurances_1.Authenticate({ userLogged: data, databaseURL: database_connection, redisClient: this.redisClient });
     }
     static async initialize(data, database_connection) {
         const redisClient = await RedisConnection_1.RedisConnection.getInstance();

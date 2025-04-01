@@ -1,4 +1,4 @@
-import { UserLogger } from "authentication-api-ibm/dist/utils/contract";
+import { UserLogger } from "auth-ibm-insurances/dist/utils/contract";
 export interface UserData extends UserLogger {
     id: string;
 }

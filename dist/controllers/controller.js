@@ -41,9 +41,7 @@ var Services;
         const URL = STRING_CONNECTION_PERSON + "/user";
         User.Create = async (data) => {
             try {
-                const response = await axios_1.default.post(`${URL}/createUser`, data, {
-                    headers: { "Content-Type": "application/json" },
-                });
+                const response = await axios_1.default.post(`${URL}/createUser`, data);
                 if (response.data) {
                     return { ok: true, data: response.data };
                 }

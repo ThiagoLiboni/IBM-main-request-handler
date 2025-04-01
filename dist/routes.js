@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.routes = void 0;
 const controller_1 = require("./controllers/controller");
 const express_1 = __importDefault(require("express"));
+const middleware_1 = require("./utils/middleware");
 const routes = express_1.default.Router();
 exports.routes = routes;
 routes.post(`/signIn`, async (req, res, next) => {
@@ -42,13 +43,7 @@ routes.post(`/createUser`, async (req, res, next) => {
             res.status(400).json({ error: "User data is required" });
         }
         const result = await controller_1.Services.User.Create(req.body);
-        if (result && "ok" in result) {
-            res.status(200).json(result.data);
-        }
-        else {
-            const status = parseInt(String(result === null || result === void 0 ? void 0 : result.Error)) || 400;
-            res.status(status).json((result === null || result === void 0 ? void 0 : result.Details) || { error: "Unknown error" });
-        }
+        (0, middleware_1.responseHandler)(res, result);
     }
     catch (err) {
         next();
@@ -61,13 +56,7 @@ routes.put(`/updateUser`, async (req, res, next) => {
             res.status(400).json({ error: "User ID and update data are required" });
         }
         const result = await controller_1.Services.User.Update(data, id);
-        if (result && "ok" in result) {
-            res.status(200).json(result.data);
-        }
-        else {
-            const status = parseInt(String(result === null || result === void 0 ? void 0 : result.Error)) || 400;
-            res.status(status).json((result === null || result === void 0 ? void 0 : result.Details) || { error: "Unknown error" });
-        }
+        (0, middleware_1.responseHandler)(res, result);
     }
     catch (err) {
         next(err);
@@ -80,13 +69,7 @@ routes.delete(`/deleteUser`, async (req, res, next) => {
             res.status(400).json({ error: "User ID is required" });
         }
         const result = await controller_1.Services.User.Delete(id);
-        if (result && "ok" in result) {
-            res.status(204).json(result.message);
-        }
-        else {
-            const status = parseInt(String(result === null || result === void 0 ? void 0 : result.Error)) || 400;
-            res.status(status).json((result === null || result === void 0 ? void 0 : result.Details) || { error: "Unknown error" });
-        }
+        (0, middleware_1.responseHandler)(res, result);
     }
     catch (err) {
         next(err);
@@ -103,13 +86,7 @@ routes.get(`/user/:id?`, async (req, res, next) => {
         if (id) {
             result = await controller_1.Services.User.Get({}, id);
         }
-        if (result && "ok" in result) {
-            res.status(200).json(result.data);
-        }
-        else {
-            const status = parseInt(String(result === null || result === void 0 ? void 0 : result.Error)) || 400;
-            res.status(status).json((result === null || result === void 0 ? void 0 : result.Details) || { error: "Unknown error" });
-        }
+        (0, middleware_1.responseHandler)(res, result);
     }
     catch (err) {
         next(err);
@@ -120,13 +97,7 @@ routes.get(`/users`, async (req, res, next) => {
         const filter = req.query;
         if (filter && Object.keys(filter).length > 0) {
             const result = await controller_1.Services.User.GetAll(filter);
-            if (result && "ok" in result) {
-                res.status(200).json(result.data);
-            }
-            else {
-                const status = parseInt(String(result === null || result === void 0 ? void 0 : result.Error)) || 400;
-                res.status(status).json((result === null || result === void 0 ? void 0 : result.Details) || { error: "Unknown error" });
-            }
+            (0, middleware_1.responseHandler)(res, result);
         }
         else {
             throw new Error("the parameters of users filter wasn't defined");

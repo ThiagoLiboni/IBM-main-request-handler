@@ -35,9 +35,7 @@ export namespace Services {
 
     export const Create = async (data: Person) => {
       try {
-        const response = await axios.post(`${URL}/createUser`, data, {
-          headers: { "Content-Type": "application/json" },
-        });
+        const response = await axios.post(`${URL}/createUser`, data);
         if (response.data) {
           return { ok: true, data: response.data };
         }

@@ -6,12 +6,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const authentication_api_ibm_1 = require("authentication-api-ibm");
 const dotenv_1 = __importDefault(require("dotenv"));
 const RedisConnection_1 = require("../utils/RedisConnection");
-const { error } = require("console");
 dotenv_1.default.config();
 class UserAuth {
     constructor(data, database_connection, redisClient) {
         this.redisClient = redisClient;
-        this.authorize = new authentication_api_ibm_1.Authenticate(data, database_connection, this.redisClient);
+        this.authorize = new authentication_api_ibm_1.Authenticate({ userLogged: data, databaseURL: database_connection, redisClient: this.redisClient });
     }
     static async initialize(data, database_connection) {
         const redisClient = await RedisConnection_1.RedisConnection.getInstance();
@@ -19,14 +18,14 @@ class UserAuth {
     }
     async login() {
         try {
-            const result = await this.authorize.logIn();
-            if (result.ok) {
-                return { result: result.message};
+            const response = await this.authorize.logIn();
+            if (response.ok) {
+                return { result: response.message };
             }
-            throw ({error: `${result.message}`})
+            throw ({ error: `${response.message}` });
         }
         catch (err) {
-            console.error('Error to resolve the login process.', err);
+            console.error('Error to resolve the login process >', err);
             return err;
         }
     }
